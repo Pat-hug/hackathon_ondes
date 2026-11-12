@@ -25,11 +25,7 @@ Afficher les fichiers cachés pour repérer `.Glitch` :
 
 ```bash
 ls -la
-```
-
-Supprimer le fichier :
-
-```bash
+# Supprimer le fichier :
 rm .Glitch
 ```
 
