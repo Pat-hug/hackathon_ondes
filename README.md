@@ -9,31 +9,19 @@
 | Kennyonn | Rempart |
 | Yassine | Passeur |
 
-## Glitch lundi
-
-### Glitch 1 : modification des droits
-
-Restauration des droits du dossier personnel :
-
+## Glitch Boss
 ```bash
-chmod 750 ~
+sudo ./boss/glitch.sh
 ```
 
-### Glitch 2 : fichier caché
+  [REPOUSSÉ]  1. La porte de service
+  [REPOUSSÉ]  2. Le mot de passe deviné
+  [REPOUSSÉ]  3. Le trône de root
+  [REPOUSSÉ]  4. La rafale
+  [REPOUSSÉ]  5. Les portes oubliées
+  [REPOUSSÉ]  6. Le vieux bug
+  [REPOUSSÉ]  7. Le mot de passe d'usine
+  [REPOUSSÉ]  8. Les ondes ouvertes
+  [REPOUSSÉ]  9. L'invité indiscret
 
-Afficher les fichiers cachés pour repérer `.Glitch` :
-
-```bash
-ls -la
-# Supprimer le fichier :
-rm .Glitch
-```
-
-### Glitch 3 : fichier `Document/plan-du-glitch.txt`
-
-Accéder au dossier et supprimer le fichier :
-
-```bash
-cd Document
-rm plan-du-glitch.txt
-```
+Résultat : 9 attaques repoussées sur 9.
