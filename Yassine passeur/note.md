@@ -1,20 +1,36 @@
-Sécurisation du poste Ubuntu (UFW, SSH, Fail2ban)
-Lors de l'exercice de sécurité (Quête 14 — Boss : Le Glitch), 
-le test initial a montré que 3 attaques sur 9 pouvaient encore passer sur le système.
- Même si le pare-feu UFW bloquait déjà les connexions réseau non autorisées,
- la connexion à distance (SSH) acceptait encore les mots de passe simples et l'accès direct au compte administrateur (root).
- Pour corriger cela, j'ai modifié le fichier de configuration /etc/ssh/sshd_config en ajoutant PasswordAuthentication no
- (pour obliger l'utilisation d'une clé sécurisée au lieu d'un mot de passe)
- et PermitRootLogin no (pour bloquer l'accès direct au compte administrateur),
- puis j'ai redémarré le service SSH (sudo systemctl restart ssh)
- pour appliquer les changements. Enfin, j'ai installé et activé le logiciel Fail2ban (sudo apt install fail2ban),
- qui surveille les tentatives de connexion et bloque automatiquement les adresses IP qui essaient de deviner un mot de passe plusieurs fois de suite,
- ce qui a permis de bloquer les 9 attaques.
+---
 
-Configuration de la borne Wi-Fi
-Pour sécuriser la borne Wi-Fi, je l'ai d'abord démarrée puis j'ai lancé son bilan de vérification quotidien (choix 8)
- afin d'identifier les failles sans fil (mot de passe d'usine, réseau ouvert et accès invité).
- J'ai ensuite remplacé le mot de passe administrateur par défaut de la borne pour éviter que n'importe qui puisse modifier ses réglages,
- et j'ai protégé le réseau sans fil avec un chiffrement sécurisé (WPA2/WPA3) et un mot de passe complexe.
- Enfin, j'ai désactivé les options inutiles comme le réseau invité non sécurisé et le bouton de connexion rapide (WPS),
- ce qui a permis de fermer toutes les failles Wi-Fi lors du test final.
+## 🛠️ Explication de ce que j'ai fait
+
+### 📡 1. Sécurisation de la borne Wi-Fi (OpenWrt)
+
+Pour bien protéger la borne Wi-Fi, j'ai d'abord lancé une vérification pour voir les problèmes de sécurité. Voici toutes les étapes que j'ai réalisées :
+
+* **Protection des réglages de la borne :**
+  * J'ai changé le mot de passe de départ par un mot de passe solide pour que personne ne puisse modifier mes réglages.
+  * J'ai activé la connexion sécurisée (**HTTPS**) sur la page de gestion pour que les mots de passe ne circulent pas en clair sur le réseau.
+  * J'ai bloqué l'accès aux réglages de la borne depuis Internet (**WAN**) pour éviter les attaques venant de l'extérieur.
+
+* **Sécurisation du réseau Wi-Fi :**
+  * J'ai allumé le Wi-Fi principal et je lui ai donné le nom **Mercator** pour bien le reconnaître.
+  * J'ai mis en place une sécurité moderne (**WPA2/WPA3**) avec un mot de passe long d'au moins **12 caractères** pour empêcher les pirates de le deviner.
+  * J'ai désactivé le bouton de connexion rapide (**WPS**) qui représente une faille de sécurité.
+
+* **Séparation et sauvegarde :**
+  * J'ai créé un **réseau invité** bien séparé du réseau principal : comme ça, les invités ont Internet mais ne peuvent pas voir mes appareils personnels.
+  * J'ai enregistré une **sauvegarde** de tous mes réglages pour pouvoir les remettre facilement en cas de problème.
+
+* **Ce qu'il reste à faire :**
+  * Il me reste uniquement à sécuriser la connexion à distance (**SSH**) en utilisant une clé numérique à la place du mot de passe (étape prévue dans la **quête 13**).
+
+---
+
+### 💻 2. Sécurisation du poste Ubuntu (Quête 14 — Boss : Le Glitch)
+
+Lors du premier test de sécurité sur mon ordinateur Ubuntu, **3 attaques sur 9** réussissaient encore à passer, même si le pare-feu (**UFW**) bloquait déjà les connexions interdites. Voici comment j'ai corrigé cela :
+
+* **Blocage des mots de passe en SSH :** J'ai modifié le fichier de réglage `/etc/ssh/sshd_config` en ajoutant `PasswordAuthentication no` (pour obliger l'utilisation d'une clé sécurisée à la place d'un simple mot de passe) et `PermitRootLogin no` (pour interdire la connexion directe sur le compte administrateur principal).
+* **Application des réglages :** J'ai redémarré le service avec la commande `sudo systemctl restart ssh` pour valider mes changements.
+* **Protection contre les essais de mots de passe :** J'ai installé et activé le logiciel **Fail2ban** (`sudo apt install fail2ban`). Ce programme surveille les connexions et bloque automatiquement les adresses IP qui essaient de deviner un mot de passe plusieurs fois de suite.
+
+Grâce à ces réglages, le test final a permis de bloquer **9 attaques sur 9**.
